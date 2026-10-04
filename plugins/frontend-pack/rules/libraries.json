@@ -1,0 +1,561 @@
+{
+  "$comment": "Mdigital frontend library whitelist/blacklist — the single source of truth for every skill in this pack. Categories: data, ui, ux, forms, validation, state, errors, i18n, architecture, tooling. Anything not listed: ask the user before installing.",
+  "allowed": [
+    {
+      "category": "data",
+      "name": "@tanstack/react-query",
+      "use_for": "All client-side server state: queries, mutations, cache, invalidation, prefetch, infinite lists (v5 only)",
+      "reason": "Single cache with dedupe, stale-while-revalidate, retries, AbortSignal cancellation, Suspense and SSR hydration"
+    },
+    {
+      "category": "data",
+      "name": "@tanstack/react-query-devtools",
+      "use_for": "Inspecting the cache in development",
+      "reason": "Official devtools; tree-shaken from production builds"
+    },
+    {
+      "category": "data",
+      "name": "@tanstack/eslint-plugin-query",
+      "use_for": "Linting query keys and options",
+      "reason": "exhaustive-deps catches variables missing from query keys; flags unstable QueryClient and other misuse"
+    },
+    {
+      "category": "data",
+      "name": "fetch (native) via src/shared/api/http.ts",
+      "use_for": "Every HTTP request",
+      "reason": "No dependency, native AbortSignal, works in browser, Node and Next.js Server Components; one wrapper adds base URL, JSON, typed ApiError and Zod parsing"
+    },
+    {
+      "category": "data",
+      "name": "zod",
+      "use_for": "Validating every API response at the boundary and inferring TS types",
+      "reason": "Backend drift fails loudly as a contract ApiError instead of crashing deep in the UI; one schema = one type"
+    },
+    {
+      "category": "data",
+      "name": "openapi-typescript + openapi-fetch",
+      "use_for": "Projects whose backend publishes an OpenAPI spec",
+      "reason": "Generated types with zero runtime cost; fetchers stay in features/<f>/api and feed queryOptions"
+    },
+    {
+      "category": "data",
+      "name": "@tanstack/react-router loaders (ensureQueryData / prefetchQuery)",
+      "use_for": "Route-level prefetch in Vite SPAs",
+      "reason": "Starts requests before render, removes loading waterfalls, reuses the same queryOptions"
+    },
+    {
+      "category": "data",
+      "name": "Next.js Server Components + HydrationBoundary/dehydrate",
+      "use_for": "Server prefetch in Next.js App Router",
+      "reason": "Official TanStack Query SSR pattern; streams pending queries to the client cache"
+    },
+    {
+      "category": "data",
+      "name": "msw",
+      "use_for": "Mocking the network in unit/integration tests, Storybook and local dev",
+      "reason": "Tests run real fetchers, schemas and cache logic; no hook mocks"
+    },
+    {
+      "category": "ui",
+      "name": "shadcn/ui (CLI)",
+      "use_for": "All primitives, copied into src/shared/ui",
+      "reason": "Team-owned source, Tailwind-native, accessible"
+    },
+    {
+      "category": "ui",
+      "name": "@base-ui/react or radix-ui",
+      "use_for": "Headless layer under shadcn; one per project",
+      "reason": "Accessible behaviour; follow whichever the project already uses"
+    },
+    {
+      "category": "ui",
+      "name": "tailwindcss v4 + tw-animate-css",
+      "use_for": "Styling and enter/exit animations",
+      "reason": "Design tokens via @theme; tw-animate-css replaces tailwindcss-animate"
+    },
+    {
+      "category": "ui",
+      "name": "class-variance-authority",
+      "use_for": "Component variants",
+      "reason": "Replaces boolean props and conditional class soup"
+    },
+    {
+      "category": "ui",
+      "name": "cn (or clsx + tailwind-merge) via @/shared/lib/utils",
+      "use_for": "Class merging",
+      "reason": "Single entry point, implementation swappable"
+    },
+    {
+      "category": "ui",
+      "name": "lucide-react",
+      "use_for": "The only icon set",
+      "reason": "shadcn default, consistent stroke style"
+    },
+    {
+      "category": "ui",
+      "name": "sonner",
+      "use_for": "The only toast channel",
+      "reason": "shadcn default, accessible live region, toast.promise and Undo"
+    },
+    {
+      "category": "ui",
+      "name": "next-themes",
+      "use_for": "Theme switching in Next.js",
+      "reason": "Standard shadcn dark-mode setup"
+    },
+    {
+      "category": "ui",
+      "name": "recharts, @tanstack/react-table, vaul, cmdk, embla-carousel-react, react-day-picker, input-otp",
+      "use_for": "Only via their shadcn components",
+      "reason": "Pulled in by shadcn"
+    },
+    {
+      "category": "ux",
+      "name": "@tanstack/react-virtual",
+      "use_for": "Long lists and tables",
+      "reason": "Keeps INP low"
+    },
+    {
+      "category": "forms",
+      "name": "react-hook-form + @hookform/resolvers",
+      "use_for": "All forms",
+      "reason": "Single form stack; uncontrolled, fast"
+    },
+    {
+      "category": "validation",
+      "name": "zod (v4)",
+      "use_for": "API responses, forms, route search params",
+      "reason": "One schema = one type; Zod 4 syntax only"
+    },
+    {
+      "category": "state",
+      "name": "@tanstack/react-router validateSearch",
+      "use_for": "URL state in Vite SPAs",
+      "reason": "Typed search params with Zod defaults"
+    },
+    {
+      "category": "state",
+      "name": "nuqs",
+      "use_for": "URL state in Next.js App Router",
+      "reason": "Typed parsers, shallow updates"
+    },
+    {
+      "category": "errors",
+      "name": "react-error-boundary (v6)",
+      "use_for": "All UI error boundaries",
+      "reason": "resetKeys, useErrorBoundary, QueryErrorResetBoundary support"
+    },
+    {
+      "category": "errors",
+      "name": "@sentry/react / @sentry/nextjs",
+      "use_for": "Error reporting, only via src/shared/lib/reportError.ts",
+      "reason": "Official React 19 root handlers and Next.js onRequestError"
+    },
+    {
+      "category": "tooling",
+      "name": "typescript-eslint (strict)",
+      "use_for": "Type-aware linting",
+      "reason": "Strict TS is the team baseline"
+    },
+    {
+      "category": "tooling",
+      "name": "eslint-plugin-react-hooks (v6+)",
+      "use_for": "Rules of Hooks and React Compiler purity rules",
+      "reason": "Official React lint rules"
+    },
+    {
+      "category": "tooling",
+      "name": "babel-plugin-react-compiler / Next reactCompiler",
+      "use_for": "Automatic memoization",
+      "reason": "New code needs no manual useMemo/useCallback/memo"
+    },
+    {
+      "category": "tooling",
+      "name": "eslint-plugin-import-x + eslint-import-resolver-typescript",
+      "use_for": "Layer boundaries (no-restricted-paths) and no-cycle",
+      "reason": "Enforces shared -> features -> pages -> app"
+    },
+    {
+      "category": "tooling",
+      "name": "eslint-plugin-react (selected rules)",
+      "use_for": "react/no-multi-comp, no-unstable-nested-components",
+      "reason": "Enforces one component per file"
+    },
+    {
+      "category": "tooling",
+      "name": "Storybook (optional)",
+      "use_for": "Documenting shared/ui and shared/components",
+      "reason": "Visual catalogue of shared pieces"
+    },
+    {
+      "category": "i18n",
+      "name": "react-i18next",
+      "use_for": "All user-facing copy, even with one UI language",
+      "reason": "ErrorState, getUserMessage and form errors rely on one i18n instance; adding a language later costs nothing"
+    },
+    {
+      "category": "tooling",
+      "name": "msw-storybook-addon",
+      "use_for": "MSW handlers inside Storybook stories",
+      "reason": "Same network mocks as tests"
+    },
+    {
+      "category": "ui",
+      "name": "@fontsource-variable/* (Vite) / next/font (Next.js)",
+      "use_for": "Self-hosted fonts",
+      "reason": "No third-party font requests; no layout shift"
+    },
+    {
+      "category": "tooling",
+      "name": "eslint-plugin-jsx-a11y",
+      "use_for": "Static accessibility linting",
+      "reason": "Catches missing labels and alt text at lint time"
+    },
+    {
+      "category": "tooling",
+      "name": "@storybook/addon-a11y",
+      "use_for": "Accessibility checks of shared/ui and shared/components stories",
+      "reason": "axe checks per story"
+    },
+    {
+      "category": "errors",
+      "name": "@sentry/vite-plugin",
+      "use_for": "Uploading hidden source maps in Vite builds",
+      "reason": "Readable stack traces without shipping source maps"
+    }
+  ],
+  "conditional": [
+    {
+      "category": "data",
+      "name": "axios",
+      "when": "Only in an existing project that already depends on it, and only inside src/shared/api/",
+      "reason": "Works (supports AbortSignal) but adds weight and a second interceptor/retry layer; new projects use native fetch"
+    },
+    {
+      "category": "data",
+      "name": "ky",
+      "when": "Only if the project already uses it, inside src/shared/api/, with ky retry disabled",
+      "reason": "Thin fetch wrapper; its retry would duplicate TanStack Query retries"
+    },
+    {
+      "category": "data",
+      "name": "@hey-api/openapi-ts",
+      "when": "OpenAPI backend and the team wants generated Zod schemas or queryOptions",
+      "reason": "Good generator, but generated hooks must not replace the feature key factory and invalidation conventions"
+    },
+    {
+      "category": "data",
+      "name": "orval",
+      "when": "OpenAPI backend; configure it to emit fetchers/Zod schemas (or queryOptions), not standalone hooks",
+      "reason": "Generated hooks own their key scheme and bypass features/<f>/api factories"
+    },
+    {
+      "category": "data",
+      "name": "Next.js Server Actions",
+      "when": "Next.js App Router mutations; used as mutationFn or for simple forms with no client cache",
+      "reason": "Fine transport, but Query keys must still be invalidated on the client; revalidatePath/updateTag only for RSC-rendered data"
+    },
+    {
+      "category": "data",
+      "name": "React 19 use(promise)",
+      "when": "Next.js only, for a promise created in a Server Component and passed to a Client Component",
+      "reason": "A promise created during client render suspends forever; use useSuspenseQuery on the client"
+    },
+    {
+      "category": "data",
+      "name": "Next.js 'use cache' / cacheLife / cacheTag",
+      "when": "Server-side caching of data rendered only by Server Components",
+      "reason": "Server cache layer, independent of the TanStack Query client cache; do not render the same data both ways"
+    },
+    {
+      "category": "data",
+      "name": "@tanstack/query-persist-client-core / react-query-persist-client",
+      "when": "Explicit offline or PWA requirement",
+      "reason": "Persists the Query cache correctly (buster, maxAge); never hand-roll localStorage caching"
+    },
+    {
+      "category": "data",
+      "name": "graphql-request or typed fetch + GraphQL codegen (TypedDocumentNode)",
+      "when": "A GraphQL backend exists",
+      "reason": "Keeps TanStack Query as the only cache instead of adding Apollo/urql"
+    },
+    {
+      "category": "state",
+      "name": "zustand",
+      "when": "Truly global client-only UI state that URL, context and the query cache cannot hold",
+      "reason": "Last resort; never holds server data"
+    },
+    {
+      "category": "ui",
+      "name": "motion (motion/react)",
+      "when": "Gestures, layout transitions, sequenced animation only; must respect useReducedMotion()",
+      "reason": "Plain CSS/Tailwind covers simple hovers and fades"
+    },
+    {
+      "category": "errors",
+      "name": "Sentry Session Replay",
+      "when": "Only with maskAllText and blockAllMedia plus a privacy sign-off",
+      "reason": "Records user sessions; PII risk"
+    },
+    {
+      "category": "tooling",
+      "name": "eslint-plugin-boundaries",
+      "when": "The team wants stricter feature isolation than import-x provides",
+      "reason": "Optional stricter layer rules"
+    },
+    {
+      "category": "data",
+      "name": "superjson",
+      "when": "Next.js dehydrate/hydrate when query data contains Date, Map or Set",
+      "reason": "Plain JSON loses these types across the server/client boundary"
+    }
+  ],
+  "forbidden": [
+    {
+      "category": "data",
+      "name": "fetch/axios inside useEffect with useState",
+      "instead": "useQuery / useSuspenseQuery with queryOptions from features/<f>/api",
+      "reason": "Race conditions, no cache or dedupe, no cancellation, double requests in StrictMode, manual loading/error state"
+    },
+    {
+      "category": "data",
+      "name": "Copying server data into useState, Zustand, Redux, Jotai or Context",
+      "instead": "Read from the query (with select) and derive during render; client stores hold UI state only",
+      "reason": "Creates a second source of truth that goes stale after refetch or invalidation"
+    },
+    {
+      "category": "data",
+      "name": "swr",
+      "instead": "@tanstack/react-query",
+      "reason": "A second cache next to TanStack Query; weaker mutation and optimistic rollback story"
+    },
+    {
+      "category": "data",
+      "name": "@reduxjs/toolkit/query (RTK Query)",
+      "instead": "@tanstack/react-query",
+      "reason": "Requires a Redux store the stack does not use; second cache"
+    },
+    {
+      "category": "data",
+      "name": "@apollo/client, urql",
+      "instead": "TanStack Query + graphql-request / typed GraphQL documents",
+      "reason": "Second, normalized cache with its own invalidation model"
+    },
+    {
+      "category": "data",
+      "name": "react-query (v3 package) and @tanstack/react-query v4 APIs",
+      "instead": "@tanstack/react-query v5 object syntax (queryOptions, gcTime, isPending)",
+      "reason": "Removed overloads, cacheTime and isLoading semantics changed; mixing versions breaks types"
+    },
+    {
+      "category": "data",
+      "name": "node-fetch, isomorphic-fetch, cross-fetch, whatwg-fetch",
+      "instead": "native fetch",
+      "reason": "Native fetch exists in every runtime we target (modern browsers, Node 18+, Next.js)"
+    },
+    {
+      "category": "data",
+      "name": "superagent, request, jquery.ajax, use-http, react-fetch-hook, react-async",
+      "instead": "native fetch wrapper + TanStack Query",
+      "reason": "Unmaintained or duplicate abstractions without a proper cache"
+    },
+    {
+      "category": "data",
+      "name": "setInterval / setTimeout polling",
+      "instead": "refetchInterval option",
+      "reason": "Leaks on unmount, ignores visibility and dedupe"
+    },
+    {
+      "category": "data",
+      "name": "localStorage/sessionStorage as a server-data cache",
+      "instead": "TanStack Query cache (persist plugin if offline is required)",
+      "reason": "No staleness, invalidation or schema versioning"
+    },
+    {
+      "category": "data",
+      "name": "Inline query key literals in components",
+      "instead": "Feature key factory + queryOptions in features/<f>/api/*.queries.ts",
+      "reason": "Keys drift and invalidation silently misses entries"
+    },
+    {
+      "category": "data",
+      "name": "Type assertions on responses (res.json() as T, as any)",
+      "instead": "Zod schema parse inside shared/api/http.ts",
+      "reason": "Lies to the type checker; backend changes crash at runtime far from the cause"
+    },
+    {
+      "category": "data",
+      "name": "Fetching without forwarding the AbortSignal",
+      "instead": "queryFn: ({ signal }) => fetcher(args, signal)",
+      "reason": "Stale responses waste bandwidth and cannot be cancelled when the key changes"
+    },
+    {
+      "category": "ui",
+      "name": "MUI / Material UI",
+      "instead": "shadcn/ui",
+      "reason": "Own theme system and emotion styling engine, fights Tailwind"
+    },
+    {
+      "category": "ui",
+      "name": "Chakra UI, Mantine, Ant Design",
+      "instead": "shadcn/ui",
+      "reason": "Second component kit and theming system"
+    },
+    {
+      "category": "ui",
+      "name": "Bootstrap / react-bootstrap",
+      "instead": "Tailwind + shadcn",
+      "reason": "Global CSS clashes with Tailwind preflight"
+    },
+    {
+      "category": "ui",
+      "name": "styled-components, Emotion",
+      "instead": "Tailwind utilities + cva",
+      "reason": "Runtime CSS-in-JS, poor RSC fit; styled-components in maintenance mode"
+    },
+    {
+      "category": "ui",
+      "name": "CSS Modules / Sass for component styling",
+      "instead": "Tailwind tokens and utilities",
+      "reason": "Second styling path"
+    },
+    {
+      "category": "ui",
+      "name": "DaisyUI, Flowbite and other Tailwind kits",
+      "instead": "shadcn/ui",
+      "reason": "Parallel component classes and tokens"
+    },
+    {
+      "category": "ui",
+      "name": "react-icons, FontAwesome, Heroicons, MUI icons",
+      "instead": "lucide-react (custom SVG in shared/ui/icons if missing)",
+      "reason": "One icon set only"
+    },
+    {
+      "category": "ui",
+      "name": "framer-motion (old package name)",
+      "instead": "motion/react",
+      "reason": "Superseded by motion"
+    },
+    {
+      "category": "ui",
+      "name": "GSAP, react-spring, anime.js",
+      "instead": "motion or CSS",
+      "reason": "Overlap; needs explicit lead approval"
+    },
+    {
+      "category": "ui",
+      "name": "tailwindcss-animate",
+      "instead": "tw-animate-css",
+      "reason": "Replaced in shadcn for Tailwind v4"
+    },
+    {
+      "category": "ui",
+      "name": "Tailwind @apply for repeated class strings",
+      "instead": "Extract a component or a cva variant",
+      "reason": "Hides tokens and duplicates styles"
+    },
+    {
+      "category": "ux",
+      "name": "react-hot-toast, react-toastify, shadcn legacy useToast",
+      "instead": "sonner",
+      "reason": "Duplicate toast channel; shadcn deprecated its old toast"
+    },
+    {
+      "category": "ux",
+      "name": "react-loading-skeleton",
+      "instead": "shadcn Skeleton",
+      "reason": "Duplicate of a primitive we own"
+    },
+    {
+      "category": "ux",
+      "name": "react-spinners and other spinner packs",
+      "instead": "lucide Loader2 with animate-spin under motion-safe",
+      "reason": "Unneeded dependency"
+    },
+    {
+      "category": "ux",
+      "name": "window.confirm and hand-made modals",
+      "instead": "shadcn AlertDialog / Dialog",
+      "reason": "No focus trap or styling; inaccessible"
+    },
+    {
+      "category": "forms",
+      "name": "formik, react-final-form, TanStack Form",
+      "instead": "react-hook-form + zod",
+      "reason": "Two form stacks in one codebase"
+    },
+    {
+      "category": "validation",
+      "name": "yup, joi, valibot (in app code)",
+      "instead": "zod",
+      "reason": "One validation library"
+    },
+    {
+      "category": "state",
+      "name": "use-query-params, hand-written URLSearchParams sync",
+      "instead": "TanStack Router validateSearch or nuqs",
+      "reason": "Untyped"
+    },
+    {
+      "category": "state",
+      "name": "Redux, Redux Toolkit, MobX, Recoil (new projects)",
+      "instead": "TanStack Query + URL + RHF + context + zustand",
+      "reason": "Every case is already covered; extra boilerplate"
+    },
+    {
+      "category": "errors",
+      "name": "neverthrow, fp-ts, effect (for error handling)",
+      "instead": "ApiError + plain TS Result union where needed",
+      "reason": "Second error model next to TanStack Query"
+    },
+    {
+      "category": "errors",
+      "name": "Hand-written class error boundaries",
+      "instead": "react-error-boundary (Next.js error.tsx/global-error.tsx are exempt)",
+      "reason": "Reinvents tested behaviour"
+    },
+    {
+      "category": "errors",
+      "name": "Sentry.ErrorBoundary together with root reactErrorHandler",
+      "instead": "react-error-boundary for UI, reporting at the root",
+      "reason": "Errors get reported twice"
+    },
+    {
+      "category": "errors",
+      "name": "Custom window.onerror / unhandledrejection listeners",
+      "instead": "Sentry SDK",
+      "reason": "Already captured by Sentry"
+    },
+    {
+      "category": "errors",
+      "name": "console.log as logging",
+      "instead": "reportError() in shared/lib; console.warn/error only",
+      "reason": "no-console is an error in CI"
+    },
+    {
+      "category": "architecture",
+      "name": "forwardRef in new code",
+      "instead": "ref as a regular prop (React 19)",
+      "reason": "Obsolete API"
+    },
+    {
+      "category": "architecture",
+      "name": "React.FC",
+      "instead": "Plain function with typed props",
+      "reason": "Adds implicit children and noise"
+    },
+    {
+      "category": "architecture",
+      "name": "react-use / ahooks lifecycle hooks (useMount, useUpdateEffect)",
+      "instead": "Plain useEffect with correct dependencies, or no effect",
+      "reason": "Hide dependencies from the linter"
+    },
+    {
+      "category": "architecture",
+      "name": "Barrel files under shared/ and any export *",
+      "instead": "Import concrete modules; feature index.ts with named re-exports",
+      "reason": "Import cycles and slow dev builds"
+    }
+  ]
+}
