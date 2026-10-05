@@ -11,9 +11,16 @@ A page is not done when it renders. It is done when a real user can reach their 
 
 > If the request includes a Figma link or "по макету", first run the `figma-pack` plugin's entry skill `figma-core` (it routes to `figma-to-react`, whose spec feeds this brief), and the brief's states list absorbs the spec's "missing in design" items.
 
+## 0. Order of work (enforced)
+
+1. Load this skill first, before any other pack skill.
+2. Write the brief to `UX.md` next to the page (`src/pages/<route>/UX.md`, or the Next.js route folder). A hook blocks creating a new page file until that `UX.md` exists.
+3. Show the brief to the user and wait for an answer when running interactively. In non-interactive runs (`claude -p`) do not wait, and repeat the brief at the top of the final report.
+4. Only then build. Load only the skills the page needs: `react-ux` and `react-data-fetching` almost always; `react-ui` for new visual components; `react-error-handling` when touching `shared/api` or boundaries; `react-architecture` when creating folders. Do not load every skill for one page.
+
 ## 1. Write the UX brief (before any code)
 
-Post it to the user in this shape, 15-30 lines. Fill unknowns with an explicit assumption, never silently.
+Write it in this shape, 15-30 lines. Fill unknowns with an explicit assumption, never silently.
 
 ```
 Страница: <name>, route <path>
@@ -33,7 +40,7 @@ If the page has a destructive action, a form, or a multi-step flow, add those fl
 
 ## 2. Design rules the brief must satisfy
 
-- **One primary action per page**, visually dominant (default `Button`); everything else is secondary or ghost. If you find two primaries, the page does two jobs - split it or demote one.
+- **One primary action per page**, visually dominant (default `Button`); everything else is secondary or ghost. If you find two primaries, the page does two jobs - split it or demote one. When the first-use empty state shows the primary action, hide the header copy of it so it does not appear twice.
 - **Hierarchy follows the user's goal**, not the data model: the thing they came for is above the fold on 375px.
 - **Every async region has all states** designed: loading (skeleton that matches the final layout), first-use empty (explains value + primary action), no-results empty (shows the active filter + "сбросить"), error (what happened + what to do + retry), permission denied. Use `QueryState`, `EmptyState`, `ErrorState` from `react-ux`.
 - **Lists**: filters, search, sort and page live in the URL; pagination keeps previous data; long lists are virtualized.
@@ -41,7 +48,7 @@ If the page has a destructive action, a form, or a multi-step flow, add those fl
 - **Destructive actions**: reversible -> act immediately with Undo; irreversible -> `AlertDialog` naming the object and consequence.
 - **Navigation**: the user always knows where they are (page title, active nav item, breadcrumbs for depth >= 2) and how to go back.
 - **Mobile is not a shrunk desktop**: tables become cards or get horizontal scroll with a sticky first column; secondary actions move into a menu; tap targets >= 24px (44px preferred).
-- **Copy**: buttons are verbs ("Сохранить заказ", not "OK"); errors say what to do; no jargon or raw server text; every string is an i18n key.
+- **Copy**: buttons are verbs ("Сохранить заказ", not "OK"); errors say what to do; no jargon or raw server text; every string is an i18n key. If the project has no i18n set up yet, do not install it unasked: put the feature's strings in `features/<f>/lib/messages.ts` (one exported object) so they move to i18n in one step, and say so in the report.
 - **Accessibility**: one `h1`; landmarks (`header`, `nav`, `main`); visible focus; keyboard reaches every action; dialogs trap and return focus; status changes announced.
 
 ## 3. Flows to sketch when present
@@ -52,7 +59,7 @@ If the page has a destructive action, a form, or a multi-step flow, add those fl
 
 ## 4. Build
 
-Follow `react-architecture` (route file thin, page in `pages/<route>/`, sections as feature components, every file <= 150 lines), `react-data-fetching`, `react-ui`, `react-ux`, `react-error-handling`. Larger pages: get a file plan from the `frontend-architect` agent first. For visual direction (typography, composition, polish) the `frontend-design` skill may be used, but only within our design tokens and shadcn primitives.
+In an existing project keep its structure: never move `components/ui`, `lib`, assets or rewrite `components.json` unless the user asked; new code goes into the pack layout next to it. Follow `react-architecture` (route file thin, page in `pages/<route>/`, sections as feature components, every file <= 150 lines), `react-data-fetching`, `react-ui`, `react-ux`, `react-error-handling`. Larger pages: get a file plan from the `frontend-architect` agent first. For visual direction (typography, composition, polish) the `frontend-design` skill may be used, but only within our design tokens and shadcn primitives.
 
 ## 5. Verify in a real browser
 
@@ -63,13 +70,19 @@ Type-checking does not prove UX. With the dev server running, use the browser to
 3. Tab through the page with the keyboard; the focus order matches the visual order and every action is reachable.
 4. Check the console for errors and warnings.
 
-If no browser tool is available, say so explicitly and list which checks were not done.
+If no browser tool is available (for example in `claude -p`), do not skip the states: write Vitest + React Testing Library tests that render the page with the same MSW handlers for loading, empty, 500 and 422, and say in the report that the visual check at 375/1280 was not done.
+
+## 5a. Missing backend
+
+If the API does not exist yet, add MSW handlers in `src/mocks/` (dev only) for success, empty, a 500 and a 422 with field errors, driven by a query param or a dev toggle, so every state can be seen. Never fake data inside components.
 
 ## 6. Checklist before finishing
 
-- [ ] UX brief was posted before code; deviations from it are explained
+- [ ] `UX.md` written and shown before code; deviations from it are explained
 - [ ] One primary action; hierarchy matches the user's goal
-- [ ] Loading, both empty states, error, no-access states exist and were seen in the browser
+- [ ] Loading, both empty states, error, no-access states exist and were seen in the browser (or covered by RTL tests when no browser)
+- [ ] At least one test per state for the page (Vitest + RTL + MSW)
+- [ ] Existing project structure untouched unless asked
 - [ ] Works at 375px and 1280px (screenshots taken)
 - [ ] Keyboard-only path works; one `h1`; focus visible
 - [ ] All copy is i18n keys with verb buttons and actionable errors

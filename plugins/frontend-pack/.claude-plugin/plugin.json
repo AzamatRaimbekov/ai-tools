@@ -1,6 +1,6 @@
 {
   "name": "frontend-pack",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Mdigital React frontend standards: new project setup, page UX design, component architecture, DRY, data fetching and caching, UI, UX, error handling, with architect and reviewer agents.",
   "author": {
     "name": "Mdigital"

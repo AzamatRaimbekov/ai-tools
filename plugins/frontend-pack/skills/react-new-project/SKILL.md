@@ -32,7 +32,8 @@ npm create vite@latest <dir> -- --template react-ts
 cd <dir> && npm install
 npm install tailwindcss @tailwindcss/vite @tanstack/react-query @tanstack/react-router \
   react-hook-form @hookform/resolvers zod sonner react-error-boundary react-i18next i18next lucide-react
-npm install -D @tanstack/router-plugin @tanstack/react-query-devtools @tanstack/eslint-plugin-query
+npm install -D @tanstack/router-plugin @tanstack/react-query-devtools @tanstack/eslint-plugin-query \
+  vitest @testing-library/react @testing-library/user-event @testing-library/jest-dom jsdom msw
 npx shadcn@latest init
 ```
 
@@ -45,7 +46,8 @@ npx create-next-app@latest <dir> --ts --tailwind --eslint --app --src-dir --impo
 cd <dir>
 npm install @tanstack/react-query react-hook-form @hookform/resolvers zod sonner \
   react-error-boundary react-i18next i18next lucide-react nuqs
-npm install -D @tanstack/react-query-devtools @tanstack/eslint-plugin-query
+npm install -D @tanstack/react-query-devtools @tanstack/eslint-plugin-query \
+  vitest @testing-library/react @testing-library/user-event @testing-library/jest-dom jsdom msw
 npx shadcn@latest init
 ```
 
@@ -88,6 +90,7 @@ Run and fix until all pass:
 npx tsc --noEmit -p .        # Vite: -p tsconfig.app.json
 npm run lint
 npm run build
+npx vitest run --passWithNoTests
 node <frontend-pack>/scripts/check-file-size.mjs src
 ```
 

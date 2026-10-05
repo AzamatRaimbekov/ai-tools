@@ -33,6 +33,7 @@ src/
 ```
 
 - Vite + TanStack Router with file-based routing: route files (`src/routes/`) only declare the route (loader, `validateSearch`) and render a page from `pages/`. In Next.js, `app/` is the routing layer and must stay thin; never put feature logic in `page.tsx`.
+- Existing projects keep their layout: never move existing folders (`components/ui`, `lib`, assets) or rewrite `components.json` unless the user asked. Put new code in this layout next to the old one and propose a migration separately.
 - Create a subfolder only when it has content. A feature with one component does not need `hooks/` or `lib/`.
 - A file belongs in `shared/` only if it has no knowledge of any business domain. If it mentions `user`, `order`, `invoice`, it belongs in a feature.
 - Dependency direction is one-way: `shared -> features -> pages/routes -> app`. `shared/` never imports from `features/`, `pages/`, or `app/`.

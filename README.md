@@ -33,7 +33,11 @@ Agents: `frontend-architect` (plans a feature), `frontend-reviewer` (reviews cod
 
 Library whitelist/blacklist: `plugins/frontend-pack/rules/libraries.json`.
 
-Hook: after every edit of a `.tsx`/`.jsx` file, files over 150 lines are sent back for decomposition (`shared/ui`, tests and stories are exempt; legacy files may be edited as long as they don't grow).
+Hooks:
+- before creating a new page file (`src/pages/<route>/*.tsx`, Next.js `page.tsx`), a `UX.md` brief must exist next to it (disable per project with `MDIGITAL_UX_BRIEF=off`);
+- after every edit of a `.tsx`/`.jsx` file, files over 150 lines are sent back for decomposition (`shared/ui`, tests and stories are exempt; legacy files may be edited as long as they don't grow).
+
+Reports: `docs/reports/`.
 
 ### figma-pack
 

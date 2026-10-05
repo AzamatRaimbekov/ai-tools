@@ -222,6 +222,18 @@
       "name": "@sentry/vite-plugin",
       "use_for": "Uploading hidden source maps in Vite builds",
       "reason": "Readable stack traces without shipping source maps"
+    },
+    {
+      "category": "tooling",
+      "name": "vitest",
+      "use_for": "Unit and component tests (Vite projects; also fine in Next.js)",
+      "reason": "Vite-native, fast, Jest-compatible API"
+    },
+    {
+      "category": "tooling",
+      "name": "@testing-library/react + @testing-library/user-event + @testing-library/jest-dom + jsdom",
+      "use_for": "Component and page tests through the user's eyes",
+      "reason": "Tests behaviour, not implementation; pairs with MSW for every UI state"
     }
   ],
   "conditional": [
