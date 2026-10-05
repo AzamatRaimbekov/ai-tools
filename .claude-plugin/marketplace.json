@@ -1,12 +1,21 @@
 {
   "name": "mdigital",
-  "owner": { "name": "Mdigital front-end department" },
-  "metadata": { "description": "Mdigital internal Claude Code plugins" },
+  "owner": {
+    "name": "Mdigital front-end department"
+  },
+  "metadata": {
+    "description": "Mdigital internal Claude Code plugins"
+  },
   "plugins": [
     {
       "name": "frontend-pack",
       "source": "./plugins/frontend-pack",
       "description": "React frontend standards: new project setup, page UX, architecture, DRY, data fetching, UI, UX, error handling, architect and reviewer agents."
+    },
+    {
+      "name": "figma-pack",
+      "source": "./plugins/figma-pack",
+      "description": "Figma workflow: connect a design system by one link, design layouts with our components, convert designs to React, React Native or Flutter."
     }
   ]
 }

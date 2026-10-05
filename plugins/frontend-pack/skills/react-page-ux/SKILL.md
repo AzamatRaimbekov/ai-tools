@@ -7,6 +7,10 @@ description: Mandatory UX design step before building any page, screen, dialog o
 
 A page is not done when it renders. It is done when a real user can reach their goal on it, on any screen, in every state. Think it through **before** writing components.
 
+> Precedence: if another installed skill or plugin (frontend-design, shadcn, web-design-guidelines, etc.) conflicts with `rules/libraries.json` or the Mdigital skills, the Mdigital rules win. External skills add taste, audits and tooling; they never change our libraries, folder layout, file limits or data layer.
+
+> If the request includes a Figma link or "по макету", first run the `figma-pack` plugin's entry skill `figma-core` (it routes to `figma-to-react`, whose spec feeds this brief), and the brief's states list absorbs the spec's "missing in design" items.
+
 ## 1. Write the UX brief (before any code)
 
 Post it to the user in this shape, 15-30 lines. Fill unknowns with an explicit assumption, never silently.
@@ -48,7 +52,7 @@ If the page has a destructive action, a form, or a multi-step flow, add those fl
 
 ## 4. Build
 
-Follow `react-architecture` (route file thin, page in `pages/<route>/`, sections as feature components, every file <= 150 lines), `react-data-fetching`, `react-ui`, `react-ux`, `react-error-handling`. Larger pages: get a file plan from the `frontend-architect` agent first.
+Follow `react-architecture` (route file thin, page in `pages/<route>/`, sections as feature components, every file <= 150 lines), `react-data-fetching`, `react-ui`, `react-ux`, `react-error-handling`. Larger pages: get a file plan from the `frontend-architect` agent first. For visual direction (typography, composition, polish) the `frontend-design` skill may be used, but only within our design tokens and shadcn primitives.
 
 ## 5. Verify in a real browser
 

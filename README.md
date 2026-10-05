@@ -7,6 +7,7 @@ Claude Code plugins of the Mdigital front-end department.
 ```bash
 claude plugin marketplace add git@gitlab.mdigital.kg:front-end-deport/ai-tools.git
 claude plugin install frontend-pack@mdigital
+claude plugin install figma-pack@mdigital
 ```
 
 Restart Claude Code after installing. Update later with `claude plugin marketplace update mdigital`.
@@ -33,3 +34,20 @@ Agents: `frontend-architect` (plans a feature), `frontend-reviewer` (reviews cod
 Library whitelist/blacklist: `plugins/frontend-pack/rules/libraries.json`.
 
 Hook: after every edit of a `.tsx`/`.jsx` file, files over 150 lines are sent back for decomposition (`shared/ui`, tests and stories are exempt; legacy files may be edited as long as they don't grow).
+
+### figma-pack
+
+Figma workflow through the Figma MCP. Entry skill: `figma-core` (routes every Figma request).
+
+| Skill | Covers |
+|---|---|
+| `figma-core` | Router, seat and rate-limit checks, shared rules |
+| `figma-design-system` | Connect the design system by one link → project catalog `.figma/design-system.{md,json}` |
+| `figma-design` | Design screens and sites in Figma only from catalog components, blocks and variables |
+| `figma-to-react` | Figma → React web (desktop + mobile web), following frontend-pack |
+| `figma-to-react-native` | Figma → React Native (Expo, Expo Router, Unistyles) |
+| `figma-to-flutter` | Figma → Flutter (MVVM, Riverpod, go_router, ThemeData from variables) |
+
+Agents: `figma-reader` (read-only, produces a platform-neutral spec), `figma-designer` (draws in Figma after an explicit "yes").
+
+Figma seats: View = 6 MCP calls/month on Enterprise (not usable); Dev = reading (design → code); Full = reading and drawing.

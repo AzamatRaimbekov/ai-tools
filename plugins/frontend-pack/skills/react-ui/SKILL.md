@@ -7,6 +7,8 @@ description: Implements and reviews the visual layer of Mdigital React apps with
 
 Scope: how components look and are composed. Loading/empty/feedback flows belong to `react-ux`; error handling to `react-error-handling`; data fetching to `react-data-fetching`; folder layout and naming to `react-architecture`.
 
+> Precedence: if another installed skill or plugin (frontend-design, shadcn, web-design-guidelines, etc.) conflicts with `rules/libraries.json` or the Mdigital skills, the Mdigital rules win. External skills add taste, audits and tooling; they never change our libraries, folder layout, file limits or data layer.
+
 ## Where UI code lives
 
 | Path | Holds | Rule |
@@ -60,6 +62,8 @@ export function Badge({ className, tone, ...props }: BadgeProps) {
 ## 3. cn() everywhere
 
 - Merge classes only with `cn()` from `@/shared/lib/utils`. Never string-concatenate or template-literal classes.
+- Space children with `flex`/`grid` + `gap-*`, not `space-y-*`/`space-x-*` or margins on children.
+- Toasts always go through `sonner` (`toast()`), also in Base UI projects; do not add the Base UI toast component.
 - Every styled component accepts `className` and passes it last: `cn(base, variants, className)` so callers can override.
 - Conditionals go inside `cn`: `cn("border", isActive && "border-primary")`.
 
@@ -102,7 +106,7 @@ export function Badge({ className, tone, ...props }: BadgeProps) {
 - Write the mobile layout first, then add `sm: md: lg: xl:`.
 - Use container queries (`@container`, `@md:`) for components that live in variable-width slots (cards, sidebars).
 - Touch targets at least 24x24 px (prefer `size-9`+ for icon buttons on touch UIs).
-- Check 360px, 768px and 1280px before finishing. No horizontal scroll on the page.
+- Check 375px, 768px and 1280px before finishing. No horizontal scroll on the page.
 
 ## 7. Dark mode via tokens
 
@@ -212,7 +216,7 @@ function OrderSummary({ orderId }: { orderId: string }) {   // features/orders/c
 - [ ] All class merging via `cn()`; component accepts and forwards `className`
 - [ ] No hex/rgb/raw palette colors, no unjustified arbitrary values, no static `style={{}}`
 - [ ] Spacing and type from the scale; `gap` over margins; consistent rhythm
-- [ ] Mobile-first; checked at 360 / 768 / 1280 px; no horizontal page scroll
+- [ ] Mobile-first; checked at 375 / 768 / 1280 px; no horizontal page scroll
 - [ ] Looks correct in light and dark without per-component `dark:` color overrides
 - [ ] Semantic elements; no `div onClick`; heading order correct
 - [ ] Every control has an accessible name; focus ring visible; contrast meets 4.5:1 / 3:1

@@ -9,6 +9,8 @@ This skill covers how the product **behaves**: what the user sees while waiting,
 
 Stack: React 19, TypeScript strict, shadcn/ui + Tailwind, TanStack Query, React Hook Form + Zod, sonner, TanStack Router (Vite) or Next.js App Router.
 
+> Precedence: if another installed skill or plugin (frontend-design, shadcn, web-design-guidelines, etc.) conflicts with `rules/libraries.json` or the Mdigital skills, the Mdigital rules win. External skills add taste, audits and tooling; they never change our libraries, folder layout, file limits or data layer.
+
 ## 1. Every async view has four states
 
 Loading, error, empty, success. A view that renders only the success branch is unfinished. Use `QueryState` for standard list/page views; explicit branching is fine when one error needs custom UI (e.g. 404).
@@ -122,7 +124,13 @@ const onSubmit = (values: OrderFormValues) =>
   })
 
 <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
-  {/* shadcn <FormField>/<FormMessage> wires aria-invalid + aria-describedby */}
+  <Controller name="email" control={form.control} render={({ field, fieldState }) => (
+    <Field data-invalid={fieldState.invalid}>  {/* shadcn Field, not the retired FormField */}
+      <FieldLabel htmlFor="email">{t('orders.form.email.label')}</FieldLabel>
+      <Input {...field} id="email" type="email" aria-invalid={fieldState.invalid} />
+      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+    </Field>
+  )} />
   <Button type="submit" disabled={createOrder.isPending}>
     {createOrder.isPending ? t('common.saving') : t('orders.create')}
   </Button>

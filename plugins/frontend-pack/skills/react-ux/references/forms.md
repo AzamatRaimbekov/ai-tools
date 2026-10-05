@@ -12,7 +12,7 @@ src/features/orders/
 ```ts
 // lib/orderFormSchema.ts
 export const orderFormSchema = z.object({
-  email: z.email({ error: 'orders.form.email.invalid' }),       // i18n keys, translated in <FormMessage>
+  email: z.email({ error: 'orders.form.email.invalid' }),       // i18n keys, translated in <FieldError>
   quantity: z.coerce.number().int().min(1, { error: 'orders.form.quantity.min' }),
   comment: z.string().max(500).optional(),
 })
@@ -72,7 +72,7 @@ Render `form.formState.errors.root?.server` above the submit button inside `role
 - Hints under the label explain format before the user errs ("DD.MM.YYYY").
 - Use `type="email" | "tel" | "number"`, `inputMode`, `autoComplete` (`email`, `tel`, `given-name`, `one-time-code`).
 - Don't split one value into many inputs (phone, card) unless a mask library is in use.
-- Error text is next to the field, with `aria-invalid` and `aria-describedby` (shadcn `<FormControl>` sets both).
+- Build fields with shadcn `Field` + `FieldLabel` + `FieldError` and RHF `Controller` (the old `Form`/`FormField`/`FormMessage` wrappers are retired). Set `aria-invalid` on the control and `data-invalid` on `Field`; group related fields in `FieldGroup`/`FieldSet`.
 - Choose controls for the data: ≤5 options → radio group; more → select/combobox.
 - Don't make users re-enter known data; prefill from profile/previous values.
 

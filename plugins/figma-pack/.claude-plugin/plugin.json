@@ -1,0 +1,8 @@
+{
+  "name": "figma-pack",
+  "version": "0.1.0",
+  "description": "Mdigital Figma workflow: connect a design system by one link, design layouts in Figma with our components, and turn designs into React (web), React Native or Flutter code.",
+  "author": { "name": "Mdigital" },
+  "repository": "https://gitlab.mdigital.kg/front-end-deport/ai-tools",
+  "keywords": ["figma", "design-system", "design-to-code", "react", "react-native", "flutter"]
+}

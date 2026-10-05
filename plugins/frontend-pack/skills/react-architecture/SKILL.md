@@ -7,6 +7,8 @@ description: Mdigital rules for structuring React 19 + TypeScript code (Vite + T
 
 Apply these rules to every React file you create or modify. They are mandatory unless the user explicitly overrides one.
 
+> Precedence: if another installed skill or plugin (frontend-design, shadcn, web-design-guidelines, etc.) conflicts with `rules/libraries.json` or the Mdigital skills, the Mdigital rules win. External skills add taste, audits and tooling; they never change our libraries, folder layout, file limits or data layer.
+
 ## 1. Folder structure
 
 ```

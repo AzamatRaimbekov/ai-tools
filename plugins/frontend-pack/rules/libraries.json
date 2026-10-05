@@ -556,6 +556,18 @@
       "name": "Barrel files under shared/ and any export *",
       "instead": "Import concrete modules; feature index.ts with named re-exports",
       "reason": "Import cycles and slow dev builds"
+    },
+    {
+      "category": "ux",
+      "name": "Base UI toast / shadcn `toast` component (Base UI projects)",
+      "instead": "sonner",
+      "reason": "One toast channel across Radix and Base UI projects; global Query/Mutation error toasts are wired to sonner"
+    },
+    {
+      "category": "forms",
+      "name": "shadcn Form / FormField / FormItem / FormMessage wrappers",
+      "instead": "shadcn Field + FieldLabel + FieldError with react-hook-form Controller",
+      "reason": "Retired by shadcn; Field is the current pattern"
     }
   ]
 }
